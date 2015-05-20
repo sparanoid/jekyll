@@ -15,6 +15,7 @@ fi
 # your source, we expect full coverage now, not just MRI.
 # -----------------------------------------------------------------------------
 
+export JRUBY_OPTS="$JRUBY_OPTS -G -Xcli.debug=true --debug --dev -Xcompile.mode=OFF"
 if [[ "$1" == "ci" ]]
 then
   rubies=(
