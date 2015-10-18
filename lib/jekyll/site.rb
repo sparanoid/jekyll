@@ -4,7 +4,7 @@ require 'csv'
 module Jekyll
   class Site
     attr_reader   :source, :dest, :config
-    attr_accessor :layouts, :posts, :pages, :static_files, :drafts,
+    attr_accessor :layouts, :pages, :static_files, :drafts,
                   :exclude, :include, :lsi, :highlighter, :permalink_style,
                   :time, :future, :unpublished, :safe, :plugins, :limit_posts,
                   :show_drafts, :keep_files, :baseurl, :data, :file_read_opts,
@@ -74,7 +74,6 @@ module Jekyll
     def reset
       self.time = (config['time'] ? Utils.parse_date(config['time'].to_s, "Invalid time in _config.yml.") : Time.now)
       self.layouts = {}
-      self.posts = []
       self.pages = []
       self.static_files = []
       self.data = {}
@@ -175,9 +174,9 @@ module Jekyll
         end
       end
 
-      [posts, pages].flatten.each do |page_or_post|
-        if regenerator.regenerate?(page_or_post)
-          page_or_post.render(layouts, payload)
+      pages.flatten.each do |page|
+        if regenerator.regenerate?(page)
+          page.render(layouts, payload)
         end
       end
     rescue Errno::ENOENT
@@ -200,6 +199,10 @@ module Jekyll
       }
       regenerator.write_metadata
       Jekyll::Hooks.trigger :site, :post_write, self
+    end
+
+    def posts
+      collections["posts"]
     end
 
     # Construct a Hash of Posts indexed by the specified Post attribute.

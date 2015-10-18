@@ -53,3 +53,7 @@ platform :ruby, :mswin, :mingw do
   gem 'classifier-reborn', '~> 2.0'
   gem 'liquid-c', '~> 3.0'
 end
+
+# Temp
+gem 'jemoji'
+gem 'jekyll-sitemap'

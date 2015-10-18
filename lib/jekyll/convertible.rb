@@ -135,20 +135,14 @@ module Jekyll
     #
     # Returns the type of self.
     def type
-      if is_a?(Draft)
-        :drafts
-      elsif is_a?(Post)
-        :posts
-      elsif is_a?(Page)
+      if is_a?(Page)
         :pages
       end
     end
 
     # returns the owner symbol for hook triggering
     def hook_owner
-      if is_a?(Post)
-        :post
-      elsif is_a?(Page)
+      if is_a?(Page)
         :page
       end
     end

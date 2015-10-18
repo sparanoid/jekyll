@@ -1,5 +1,9 @@
+require 'forwardable'
+
 module Jekyll
   class Collection
+    extend Forwardable
+
     attr_reader :site, :label, :metadata
 
     # Create a new Collection.
@@ -20,6 +24,14 @@ module Jekyll
     # Returns an array of Jekyll::Document objects.
     def docs
       @docs ||= []
+    end
+
+    [:sort, :sort!, :each].each do |method|
+      class_eval %Q"
+        def #{method}
+          docs.#{method}
+        end
+      "
     end
 
     # Fetch the static files in this collection.
